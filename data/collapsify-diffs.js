@@ -13,7 +13,7 @@ forEach(document.getElementsByClassName("file"), function(index, fileEl) {
     var actionsEl = fileEl.getElementsByClassName("file-actions").item(0);
 
     // Insert this blob of HTML to add the collapse and expand buttons
-    actionsEl.innerHTML += '<a class="octicon-btn tooltipped tooltipped-nw collapse-diffs-collapse" aria-label="Collapse this file" href="#' + fileEl.id + '" rel="nofollow"><span class="octicon octicon-fold"></span></a><a class="octicon-btn tooltipped tooltipped-nw collapse-diffs-expand" aria-label="Expand this file" href="#' + fileEl.id + '" rel="nofollow"><span class="octicon octicon-unfold"></span></a>';
+    actionsEl.innerHTML += '<a class="octicon-btn tooltipped tooltipped-nw collapse-diffs-collapse" aria-label="Collapse this file" href="#" rel="nofollow"><span class="octicon octicon-fold"></span></a><a class="octicon-btn tooltipped tooltipped-nw collapse-diffs-expand" aria-label="Expand this file" href="#" rel="nofollow"><span class="octicon octicon-unfold"></span></a>';
 
     // Make the new buttons show/hide the file contents and each other
     var dataEl = fileEl.getElementsByClassName("data").item(0);
@@ -24,12 +24,14 @@ forEach(document.getElementsByClassName("file"), function(index, fileEl) {
 	dataEl.style.display = "none";
 	collapseButton.style.display = "none";
 	expandButton.style.display = "inline-block";
+	return false;
     };
 
     expandButton.onclick = function() {
 	dataEl.style.display = "block";
 	collapseButton.style.display = "inline-block";
 	expandButton.style.display = "none";
+	return false;
     };
 
     // Hide expand buttons to start with
