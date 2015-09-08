@@ -1,20 +1,37 @@
+// Helper function for looping over collections returned by
+// getElementsByClassName etc
 var forEach = function (array, callback, scope) {
     for (var i = 0; i < array.length; i++) {
 	callback.call(scope, i, array[i]);
     }
 };
 
-window.alert("Collapsify those diffs!");
+// Find the container element for each file and modify each one...
+forEach(document.getElementsByClassName("file"), function(index, fileEl) {
+    // Find the file-actions element which contains the existing control like
+    // "open in GitHub desktop"
+    var actionsEl = fileEl.getElementsByClassName("file-actions").item(0);
 
-var fileHeaders = document.getElementsByClassName("file-header");
+    // Insert this blob of HTML to add the collapse and expand buttons
+    actionsEl.innerHTML += '<a class="octicon-btn tooltipped tooltipped-nw collapse-diffs-collapse" aria-label="Collapse this file" href="#' + fileEl.id + '" rel="nofollow"><span class="octicon octicon-fold"></span></a><a class="octicon-btn tooltipped tooltipped-nw collapse-diffs-expand" aria-label="Expand this file" href="#' + fileEl.id + '" rel="nofollow"><span class="octicon octicon-unfold"></span></a>';
 
-forEach(fileHeaders, function(index, element) {
-    var fileActions = element.getElementsByClassName("file-actions").item(0);
-    fileActions.innerHTML += '<a class="octicon-btn tooltipped tooltipped-nw collapse-diffs-collapse" aria-label="Collapse this file" href="#" rel="nofollow"><span class="octicon octicon-fold"></span></a><a class="octicon-btn tooltipped tooltipped-nw collapse-diffs-expand" aria-label="Expand this file" href="#" rel="nofollow"><span class="octicon octicon-unfold"></span></a>';
-});
-
-var collapseButtons = document.getElementsByClassName("collapse-diffs-collapse");
-
-forEach(collapseButtons, function(index, element) {
+    // Make the new buttons show/hide the file contents and each other
+    var dataEl = fileEl.getElementsByClassName("data").item(0);
+    var collapseButton = actionsEl.getElementsByClassName("collapse-diffs-collapse").item(0);
+    var expandButton = actionsEl.getElementsByClassName("collapse-diffs-expand").item(0);
     
+    collapseButton.onclick = function() {
+	dataEl.style.display = "none";
+	collapseButton.style.display = "none";
+	expandButton.style.display = "inline-block";
+    };
+
+    expandButton.onclick = function() {
+	dataEl.style.display = "block";
+	collapseButton.style.display = "inline-block";
+	expandButton.style.display = "none";
+    };
+
+    // Hide expand buttons to start with
+    expandButton.style.display = "none";
 });
