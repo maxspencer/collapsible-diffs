@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+
+    "name": "Collapsible Diffs",
+    "version": "0.1.1",
+    "description": "An addon to let you collapse individual files when viewing diffs on Github",
+    "author": "Max Spencer",
+
+    "content_scripts": [
+	{
+	    "matches": ["*://github.com/*"],
+	    "js": ["collapsify-diffs.js"]
+	}
+    ]
+}
